@@ -7,48 +7,112 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/statusTexView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/message_stopped" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/startButton"
+        <TextView
+            android:id="@+id/taskNameThread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start"
-            android:layout_marginStart="4dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/thread"/>
 
-        <Button
-            android:id="@+id/incrementButton"
+        <TextView
+            android:id="@+id/statusThread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/increment"
-            android:layout_marginStart="4dp"
-            android:onClick="onClickIncrement"/>
+            android:text="@string/message_stopped" />
 
-        <Button
-            android:id="@+id/decrementButton"
-            android:layout_width="wrap_content"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/decrement"
-            android:layout_marginStart="4dp"
-            android:onClick="onClickDecrement"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/startButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/start" />
+
+            <Button
+                android:id="@+id/incrementButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:onClick="onClickIncrement"
+                android:text="@string/increment" />
+
+            <Button
+                android:id="@+id/decrementButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:onClick="onClickDecrement"
+                android:text="@string/decrement" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/taskNameAsyncTask"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="AsyncTask"/>
+
+        <TextView
+            android:id="@+id/statusAsyncTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/progressAsyncTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/startAsyncTask"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/start"
+                android:onClick="startAsyncTask"/>
+
+            <Button
+                android:id="@+id/incrementAsyncTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:onClick="onClickIncrementAsyncTask"
+                android:text="@string/increment" />
+
+            <Button
+                android:id="@+id/decrementAsyncTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:onClick="onClickDecrementAsyncTask"
+                android:text="@string/decrement" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>

@@ -1,19 +1,21 @@
 package com.sigmasoftware.akucherenko.asynchronoustask
 
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.sigmasoftware.akucherenko.asynchronoustask.databinding.ActivityMainBinding
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var progressThread: ProgressBar
-    private lateinit var statusTextView: TextView
+    private lateinit var statusThread: TextView
+    private lateinit var statusAsyncTask: TextView
+    private var maxProgressAsyncTask = 0
     private val step = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,18 +27,24 @@ class MainActivity : AppCompatActivity() {
 //        val executorService: ExecutorService = Executors.newFixedThreadPool(4)
 
         progressThread = binding.progressBar
-        statusTextView = binding.statusTexView
-        statusTextView.text = getString(R.string.message_stopped)
+        statusThread = binding.statusThread
+        statusThread.text = getString(R.string.message_stopped)
         progressThread.max = step
 
         binding.startButton.setOnClickListener {
             runThread()
         }
+
+        statusAsyncTask = binding.statusAsyncTask
+        statusAsyncTask.text = getString(R.string.message_stopped)
+
+
+//        MyAsyncTask().execute(23L)
     }
 
-    fun runThread() {
+    private fun runThread() {
         binding.startButton.isEnabled = false
-        statusTextView.text = getString(R.string.message_running)
+        statusThread.text = getString(R.string.message_running)
         progressThread.progress = 0
 
         val runnable = Runnable {
@@ -44,8 +52,8 @@ class MainActivity : AppCompatActivity() {
                 Thread.sleep(1000)
                 progressThread.progress++
             }
-            statusTextView.post(Runnable {
-                statusTextView.text = getString(R.string.message_finish)
+            statusThread.post(Runnable {
+                statusThread.text = getString(R.string.message_finish)
             });
             binding.startButton.post(Runnable{
                 binding.startButton.isEnabled = true
@@ -63,5 +71,52 @@ class MainActivity : AppCompatActivity() {
     fun onClickDecrement(view: android.view.View) {
         if (progressThread.max > step) progressThread.max -= step
         progressThread.progress = 0
+    }
+
+    private inner class MyAsyncTask : AsyncTask<Int, Int, String>() {
+
+        override fun onPreExecute() {
+//        super.onPreExecute()
+            binding.startAsyncTask.isEnabled = false
+            statusAsyncTask.text = getString(R.string.message_running)
+        }
+
+        override fun doInBackground(vararg p0: Int?): String {
+            var progress = 0
+            while (progress < p0[0]!!) {
+                TimeUnit.MILLISECONDS.sleep(1000L)
+                progress ++
+                publishProgress(progress)
+            }
+            return "The End"
+        }
+
+        override fun onProgressUpdate(vararg values: Int?) {
+//            super.onProgressUpdate(*values)
+            binding.progressAsyncTask.text = values[0].toString()
+        }
+
+        override fun onPostExecute(result: String?) {
+//            super.onPostExecute(result)
+            statusAsyncTask.text = getString(R.string.message_finish)
+            binding.startAsyncTask.isEnabled = true
+        }
+    }
+
+    fun startAsyncTask(view: android.view.View) {
+        maxProgressAsyncTask = step
+        MyAsyncTask().execute(maxProgressAsyncTask)
+    }
+
+    fun onClickIncrementAsyncTask(view: android.view.View) {
+        MyAsyncTask().cancel(true)
+        maxProgressAsyncTask += step
+        MyAsyncTask().execute(maxProgressAsyncTask)
+    }
+    fun onClickDecrementAsyncTask(view: android.view.View) {
+        MyAsyncTask().cancel(true)
+        if (maxProgressAsyncTask > step) maxProgressAsyncTask -= step
+        MyAsyncTask().execute(maxProgressAsyncTask)
+
     }
 }
