@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">asynchronousTask</string>
+    <string name="message_stopped">Stopped</string>
+    <string name="message_running">Running</string>
+    <string name="message_finish">Finish</string>
+    <string name="decrement">-</string>
+    <string name="increment">+</string>
+    <string name="start">Start</string>
+    <string name="thread">Thread</string>
 </resources>
